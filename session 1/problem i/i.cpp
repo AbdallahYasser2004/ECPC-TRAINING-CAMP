@@ -53,10 +53,13 @@ int main()
             }
 
              else 
-            {
-                maxii.push_back(counter);
+            {s1.push(s[i]);
+            if(counter>0)
+               { maxii.push_back(counter);
+               
+              
                 sub++;
-                counter = 0;
+                counter = 0;}
             }
         }
 
@@ -68,6 +71,7 @@ int main()
             
              else {
                 if (counter > 0) {
+                     
                     maxii.push_back(counter);
                     sub++;
                     counter = 0;

@@ -1,5 +1,7 @@
 #include <iostream>
-#include <bits/stdc++.h>
+#include <stack>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,46 +11,87 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-string s;
-cin >> s;
-stack<int> s1;
+    string s;
+    cin >> s;
+    stack<char> s1;
+    vector<int> maxii;
+    int counter = 0;
+    int sub = 0;
 
-int counter = 0;
-int maxi=0;
-for(int i = 0; i <s.size(); i++)
-
-{   if(!s1.empty()&&s1.top()=='(')
-        {
-            if(s[i]==')')
+    for (int i = 0; i < s.size(); i++)
+     {
+        if (!s1.empty()) {
+            if (s1.top() == '(' && s[i] == ')') 
             {
                 s1.pop();
-                counter+=2;
-            }
-            else
+                counter += 2;
+            } 
+            else if (s1.top() == '{' && s[i] == '}')
+            
             {
-                s1.push(s[i]);
-                
-            }
-        }
-        else
-        {
-            if(s[i]=='(')
-            {   maxi=max(maxi,counter); 
-                
-                s1.push(s[i]);
-                
-                
-            }
+                s1.pop();
+                counter += 2;
+            } 
+            
+            else if (s1.top() == '<' && s[i] == '>') 
+            
+            {
+                s1.pop();
+                counter += 2;
+            } 
+            
+            else if (s1.top() == '[' && s[i] == ']') 
+            {
+                s1.pop();
+                counter += 2;
+            } 
            
+            else if (s[i] == '(' || s[i] == '{' || s[i] == '<' || s[i] == '[')
+             {
+                s1.push(s[i]);
+            
+            }
+
+             else 
+            {
+                maxii.push_back(counter);
+                sub++;
+                counter = 0;
+            }
         }
-        //cout<<s[i]<<" "<<counter;
-        //maxi=max(maxi,counter);
-}
 
- maxi=max(maxi,counter);
- 
+         else 
+        {
+            if (s[i] == '(' || s[i] == '{' || s[i] == '<' || s[i] == '[') {
+                s1.push(s[i]);
+            }
+            
+             else {
+                if (counter > 0) {
+                    maxii.push_back(counter);
+                    sub++;
+                    counter = 0;
+                }
+            }
+        }
+    }
 
+    if (counter != 0) 
+    {
+        sub++;
+        maxii.push_back(counter);
+    }
 
-//cout<<s1.size()<<" ";
-cout<<maxi;
+    if (!maxii.empty()) 
+    {
+        cout << *max_element(maxii.begin(), maxii.end()) << " " << sub;
+    } 
+    
+    
+    else 
+    {
+        cout << 0 << " " << 1;
+    }
+
+    return 0;
 }
